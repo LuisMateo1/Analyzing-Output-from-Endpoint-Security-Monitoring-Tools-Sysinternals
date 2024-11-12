@@ -60,9 +60,6 @@ Looking further into the file hash, when looking it up on VirusTotal, evilputty.
 <h3>Configuring Sysinternals Logging and Monitoring Tools</h3>
 
 Now I'll be using sysinternals tools to monitor evilputty.exe after execution. I'll be using the following tools:
-- Process Explorer and Process Monitor, which can be used for live monitoring. These are most useful in a sandbox environment, where we know something will happen and we want to analyze it.
+- Process Explorer, which can be used for live monitoring of running processes. This is most useful in a sandbox environment, where we know something will happen and we want to analyze it.
 - Sysmon, which logs events that match a given configuration profile. This is used more for passive monitoring, and in this case, I'll be using a Sysmon configuration profile developed by InfoSec Swift on Security. That is done on Command Prompt as shown:
 ![image](https://github.com/user-attachments/assets/2b7c13e7-b36b-4cb1-bfe5-7b794ac69d1e)
-
-
-

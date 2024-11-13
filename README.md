@@ -102,8 +102,30 @@ Back on the attack box, I'll run persistence.exe, and hide it by changing the na
 ![Screenshot 2024-05-28 232907](https://github.com/user-attachments/assets/4f6d25e6-2236-4d2f-9d7f-2b873c0e79be)
 ![Screenshot 2024-05-28 233226](https://github.com/user-attachments/assets/3f51cc08-8a83-4ff1-b01d-20a2bff4515f)
 
-If I were to restart the Windows VM, we would see this in action and PuTTY will be open on startup. Unfortunately, Windows Defender turns back on and will not allow it.
+If I were to restart the Windows VM, the connection to the attack box would go down. However, PuTTY will be open on startup, unfortunately, Windows Defender turns back on and will not allow it. If Defender didn't block the process I could reconnect from the attack box as shown:
 
+![Screenshot 2024-05-28 233834](https://github.com/user-attachments/assets/dd6144ce-b2ca-47ff-8536-47831e33fc55)
 
+If I went to Event Viewer > Applications and Services Logs > Microsoft > Windows > Sysmon > Operational, 
 
+![Screenshot 2024-05-28 235255](https://github.com/user-attachments/assets/55474ea8-102f-4d45-8f90-85dd8e9f5130)
 
+By looking through the events, this is the sequence of events when evilputty executes
+1. File created—evilputty.exe creates the svchost.exe file in the temp folder.
+2. Process create—svchost.exe is loaded as a process.
+3. Registry value set—The malware creates an entry in the Registry run key.
+4. Process terminated—The svchost.exe process exits.
+
+Somethings to note:
+- This is a limited type of persistence because the code will only run when this specific user logs in. The malware has not achieved any elevated privileges.
+- This process also leaves artifacts in the temp folder. Also, a more sophisticated malware would not leave artifacts such as the one found in the temp folder
+
+To delete the malware I just go to Autoruns64, find the autorun entry, and right-click > delete
+
+![Screenshot 2024-05-29 000537](https://github.com/user-attachments/assets/fbb4bfa5-5f32-4f4d-8c55-adefee1ff67b)
+
+![Screenshot 2024-05-29 000902](https://github.com/user-attachments/assets/f234ac57-fc1f-4c67-8a75-f12fb755b918)
+
+#
+
+**Summary: This lab was an example of how malware can infect a machine without the proper security measures, it shows the process an attacker would go through to create an exploit and establish a remote connection. And I learned which tools I can use to detect and remove the malware.**
